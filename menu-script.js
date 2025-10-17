@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainMenu = document.getElementById('main-menu');
     const dustContainer = document.getElementById('dust-container');
     const scene = document.getElementById('scene-container');
-    const exitButton = document.getElementById('exit-button');
     const optionsButton = document.getElementById('options-button');
     const optionsMenu = document.getElementById('options-menu');
     const backToMenuButton = document.getElementById('back-to-menu-button');
@@ -141,18 +140,5 @@ document.addEventListener('DOMContentLoaded', () => {
             applyVisualSettings(currentSettings); // Aplicar cambio visual al instante
         });
     });
-
-    // --- LÓGICA DEL BOTÓN DE SALIR ---
-    if (exitButton) {
-        exitButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            const exitUrl = 'https://dzmgameplay.itch.io/my-life-idle';
-            document.body.style.transition = 'opacity 1s';
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                window.location.href = exitUrl;
-            }, 1000);
-        });
-    }
 
 });
