@@ -22,32 +22,28 @@
       
         <nav class="menu-nav">
             <ul>
-                <li><a href="#">COMENZAR</a></li>
-                <li><a href="#" class="disabled">CONTINUAR</a></li>
+                <li><a href="#" id="start-button">COMENZAR</a></li>
+                <li><a href="#" id="continue-button">CONTINUAR</a></li>
                 <li><a href="#" id="options-button">OPCIONES</a></li>
             </ul>
         </nav>
 
         <!-- El texto de la versión -->
-        <div class="version-info">v1.0.6</div>
+        <div class="version-info">v1.0.7</div>
 
         <!-- === INICIO DEL PANEL DE OPCIONES === -->
         <div id="options-menu" class="hidden">
             <div class="options-container">
                 <h2>OPCIONES</h2>
-
                 <!-- Opciones de Volumen -->
                 <div class="option-group">
                     <label for="master-volume">Volumen Maestro</label>
                     <input type="range" id="master-volume" class="volume-slider" min="0" max="100" value="100" data-option="masterVolume">
-                    
                     <label for="music-volume">Música</label>
                     <input type="range" id="music-volume" class="volume-slider" min="0" max="100" value="75" data-option="musicVolume">
-
                     <label for="sfx-volume">Efectos (SFX)</label>
                     <input type="range" id="sfx-volume" class="volume-slider" min="0" max="100" value="85" data-option="sfxVolume">
                 </div>
-
                 <!-- Opciones Visuales -->
                 <div class="option-group">
                     <label>Filtro Retro</label>
@@ -56,17 +52,26 @@
                         <button class="option-btn active" data-value="false" data-option="retroFilter">No</button>
                     </div>
                 </div>
-                
                 <div class="option-group">
                     <label for="brightness-slider">Brillo</label>
                     <input type="range" id="brightness-slider" class="visual-slider" min="50" max="150" value="100" data-option="brightness">
                 </div>
-
-
                 <button id="back-to-menu-button">VOLVER</button>
             </div>
         </div>
         <!-- === FIN DEL PANEL DE OPCIONES === -->
+
+        <!-- === INICIO DEL PANEL DE RANURAS DE GUARDADO === -->
+        <div id="save-slots-menu" class="hidden">
+            <div class="slots-container-wrapper">
+                <h2>SELECCIONAR PARTIDA</h2>
+                <div id="slots-container">
+                    <!-- Las ranuras se generarán aquí con JavaScript -->
+                </div>
+                <button id="back-to-main-menu-button">VOLVER</button>
+            </div>
+        </div>
+        <!-- === FIN DEL PANEL DE RANURAS DE GUARDADO === -->
 
     </div>
 
