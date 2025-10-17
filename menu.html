@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DZM Studios - Menú Principal</title>
+    <link rel="stylesheet" href="menu-style.css">
+</head>
+<body>
+
+    <!-- Contenedor principal que abarca toda la pantalla -->
+    <div id="main-menu">
+        
+        <!-- Contenedor de la escena (para el efecto parallax) -->
+        <div id="scene-container">
+            <!-- El haz de luz que viene de la ventana -->
+            <div id="light-beam"></div>
+            <!-- El contenedor donde generaremos las motas de polvo con JS -->
+            <div id="dust-container"></div>
+        </div>
+
+      
+        <nav class="menu-nav">
+            <ul>
+                <li><a href="#">COMENZAR</a></li>
+                <li><a href="#" class="disabled">CONTINUAR</a></li>
+                <li><a href="#" id="options-button">OPCIONES</a></li>
+                <!-- El enlace de SALIR ahora es el último -->
+                <li><a href="#" id="exit-button">SALIR</a></li>
+            </ul>
+        </nav>
+
+        <!-- El texto de la versión -->
+        <div class="version-info">v1.0.2</div>
+
+        <!-- === INICIO DEL PANEL DE OPCIONES === -->
+        <div id="options-menu" class="hidden">
+            <div class="options-container">
+                <h2>OPCIONES</h2>
+
+                <!-- Opciones de Volumen -->
+                <div class="option-group">
+                    <label for="master-volume">Volumen Maestro</label>
+                    <input type="range" id="master-volume" class="volume-slider" min="0" max="100" value="100" data-option="masterVolume">
+                    
+                    <label for="music-volume">Música</label>
+                    <input type="range" id="music-volume" class="volume-slider" min="0" max="100" value="75" data-option="musicVolume">
+
+                    <label for="sfx-volume">Efectos (SFX)</label>
+                    <input type="range" id="sfx-volume" class="volume-slider" min="0" max="100" value="85" data-option="sfxVolume">
+                </div>
+
+                <!-- Opciones de Filtro Retro -->
+                <div class="option-group">
+                    <label>Filtro Retro</label>
+                    <div class="button-group" id="retro-filter-toggle">
+                        <button class="option-btn" data-value="true" data-option="retroFilter">Sí</button>
+                        <button class="option-btn active" data-value="false" data-option="retroFilter">No</button>
+                    </div>
+                </div>
+
+                <button id="back-to-menu-button">VOLVER</button>
+            </div>
+        </div>
+        <!-- === FIN DEL PANEL DE OPCIONES === -->
+
+    </div>
+
+    <script src="menu-script.js"></script>
+</body>
+</html>
