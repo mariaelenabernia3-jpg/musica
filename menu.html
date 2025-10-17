@@ -29,7 +29,7 @@
         </nav>
 
         <!-- El texto de la versión -->
-        <div class="version-info">v1.0.3</div>
+        <div class="version-info">v1.0.6</div>
 
         <!-- === INICIO DEL PANEL DE OPCIONES === -->
         <div id="options-menu" class="hidden">
@@ -48,7 +48,7 @@
                     <input type="range" id="sfx-volume" class="volume-slider" min="0" max="100" value="85" data-option="sfxVolume">
                 </div>
 
-                <!-- Opciones de Filtro Retro -->
+                <!-- Opciones Visuales -->
                 <div class="option-group">
                     <label>Filtro Retro</label>
                     <div class="button-group" id="retro-filter-toggle">
@@ -56,6 +56,12 @@
                         <button class="option-btn active" data-value="false" data-option="retroFilter">No</button>
                     </div>
                 </div>
+                
+                <div class="option-group">
+                    <label for="brightness-slider">Brillo</label>
+                    <input type="range" id="brightness-slider" class="visual-slider" min="50" max="150" value="100" data-option="brightness">
+                </div>
+
 
                 <button id="back-to-menu-button">VOLVER</button>
             </div>

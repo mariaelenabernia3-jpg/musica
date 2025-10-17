@@ -17,12 +17,19 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transition: filter 0.5s ease-in-out; /* Transición para el filtro */
+    transition: filter 0.5s ease-in-out;
+
+    /* Variables CSS para controlar los filtros visuales con JS */
+    --brightness-level: 1;
+    --retro-filter: sepia(0); /* Estado inicial sin filtro */
+
+    /* Combinamos las variables en una sola propiedad filter */
+    filter: brightness(var(--brightness-level)) var(--retro-filter);
 }
 
 /* Clase que se aplicará con JS para el efecto retro */
 #main-menu.retro-filter-active {
-    filter: sepia(0.5) contrast(1.1) brightness(0.95) saturate(1.2);
+    --retro-filter: sepia(0.5) contrast(1.1) brightness(0.95) saturate(1.2);
 }
 
 
