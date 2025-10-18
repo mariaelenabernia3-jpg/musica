@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mi Vida de YouTuber</title>
+    <link rel="stylesheet" href="game-style.css">
+</head>
+<body>
+
+    <div id="game-container">
+        <!-- Panel de Estadísticas del Jugador -->
+        <aside id="stats-panel">
+            <h3>Mi Estado</h3>
+            <div id="stats-container">
+                <div class="stat-item">
+                    <span class="stat-label">⚡ Energía:</span>
+                    <span id="energy-value" class="stat-value"></span>
+                    <div class="stat-bar"><div id="energy-bar" class="bar-fill"></div></div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">📚 Conocimiento:</span>
+                    <span id="knowledge-value" class="stat-value"></span>
+                    <div class="stat-bar"><div id="knowledge-bar" class="bar-fill"></div></div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">❤️ Suscriptores:</span>
+                    <span id="subs-value" class="stat-value"></span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">💰 Dinero:</span>
+                    <span id="money-value" class="stat-value"></span>
+                </div>
+                <div class="stat-item full-width">
+                    <span class="stat-label">🎬 Metraje Grabado:</span>
+                    <span id="footage-value" class="stat-value"></span>
+                </div>
+                <div class="stat-item full-width">
+                    <span class="stat-label">📅 Día:</span>
+                    <span id="day-value" class="stat-value"></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Principal del Juego -->
+        <main id="main-panel">
+            <div id="room-view">
+                <p>Estás en tu habitación. Es hora de empezar tu aventura.</p>
+            </div>
+        </main>
+
+        <!-- Panel de Acciones -->
+        <footer id="actions-panel">
+            <button id="sleep-button" class="action-btn">Dormir</button>
+            <button id="study-button" class="action-btn">Estudiar</button>
+            <button id="computer-button" class="action-btn">Usar Ordenador</button>
+        </footer>
+    </div>
+
+    <!-- === MODALES === -->
+    <div id="intro-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>El Comienzo de un Sueño</h2>
+            <p>Desde que era niño, me fascinaba YouTube... Un día, pensé: "Yo también quiero hacer eso". ¡Mi vida de YouTuber empieza ahora!</p>
+            <button id="start-game-button">¡Empezar mi Aventura!</button>
+        </div>
+    </div>
+    
+    <div id="computer-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Mi Ordenador</h2>
+            <div class="computer-actions-grid">
+                <button id="record-video-button" class="computer-btn">Grabar Video</button>
+                <button id="edit-video-button" class="computer-btn">Editar Video</button>
+                <button id="buy-games-button" class="computer-btn">Tienda de Juegos</button>
+                <button id="upgrade-pc-button" class="computer-btn">Mejorar PC</button>
+                <button id="upload-video-button" class="computer-btn">Subir Video</button>
+            </div>
+            <button id="back-to-room-button" class="modal-back-button">Volver a la Habitación</button>
+        </div>
+    </div>
+
+    <div id="recording-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>¡Grabando!</h2>
+            <p>¡Haz clic lo más rápido que puedas para grabar!</p>
+            <div id="click-target"><span>CLIC AQUÍ</span></div>
+            <div class="stat-bar recording-progress"><div id="recording-progress-bar" class="bar-fill"></div></div>
+        </div>
+    </div>
+
+    <div id="editing-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Editando Video...</h2>
+            <p>El renderizado está en progreso. ¡Ten paciencia!</p>
+            <div class="stat-bar recording-progress"><div id="editing-progress-bar" class="bar-fill"></div></div>
+            <span id="editing-timer"></span>
+        </div>
+    </div>
+
+    <div id="upgrade-pc-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Mejorar Ordenador</h2>
+            <div id="upgrade-info"></div>
+            <button id="buy-upgrade-button" class="action-btn"></button>
+            <button id="back-to-computer-button-upgrade" class="modal-back-button">Volver</button>
+        </div>
+    </div>
+    
+    <div id="game-shop-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Tienda de Juegos</h2>
+            <div id="shop-items-container"></div>
+            <button id="back-to-computer-button-shop" class="modal-back-button">Volver</button>
+        </div>
+    </div>
+
+    <div id="select-game-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>¿Qué quieres grabar?</h2>
+            <div id="owned-games-container"></div>
+            <button id="back-to-computer-button-select" class="modal-back-button">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="upload-video-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Subir Video</h2>
+            <p>Tu video está listo. ¡Ponle un título genial!</p>
+            <input type="text" id="video-title-input" placeholder="Ej: Mi primera partida...">
+            <button id="confirm-upload-button" class="action-btn">Subir a ViewTube</button>
+            <button id="back-to-computer-button-upload" class="modal-back-button">Cancelar</button>
+        </div>
+    </div>
+    
+    <!-- Contenedor para las notificaciones -->
+    <div id="notification-container"></div>
+
+    <script src="game-script.js"></script>
+</body>
+</html>

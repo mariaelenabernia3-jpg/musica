@@ -9,12 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToMenuButton = document.getElementById('back-to-menu-button');
     const mainNav = document.querySelector('.menu-nav');
     
-    // === Elementos para guardado/carga ===
+    // Elementos de guardado/carga
     const startButton = document.getElementById('start-button');
     const continueButton = document.getElementById('continue-button');
     const saveSlotsMenu = document.getElementById('save-slots-menu');
     const slotsContainer = document.getElementById('slots-container');
     const backToMainMenuButton = document.getElementById('back-to-main-menu-button');
+    
+    // === NUEVO: Selección del botón de borrar progreso ===
+    const deleteProgressButton = document.getElementById('delete-progress-button');
 
     // --- CARGA DE SONIDOS ---
     const hoverSound = new Audio('audio/hover.mp3');
@@ -23,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hoverSound.preload = 'auto';
     clickSound.preload = 'auto';
     musicSound.preload = 'auto';
-    musicSound.loop = true; // <--- AQUÍ ESTÁ LA MAGIA DEL BUCLE
+    musicSound.loop = true;
 
     // --- SISTEMA DE GUARDADO ---
     const NUM_SLOTS = 3;
@@ -48,11 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updateContinueButtonState() {
         const hasSaveData = saveSlotsData.some(slot => !slot.isEmpty);
-        if (hasSaveData) {
-            continueButton.classList.remove('disabled');
-        } else {
-            continueButton.classList.add('disabled');
-        }
+        continueButton.classList.toggle('disabled', !hasSaveData);
     }
 
     // --- CONFIGURACIÓN DE AJUSTES (SETTINGS) ---
@@ -169,16 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const clickedSlot = event.target.closest('.save-slot');
         if (!clickedSlot) return;
         const slotId = parseInt(clickedSlot.dataset.slotId, 10);
-        const slot = saveSlotsData[slotId];
-        if (slot.isEmpty) {
-            slot.isEmpty = false;
-            slot.data = { date: new Date().toLocaleString('es-ES'), level: 1, score: 0 };
-            saveGameData();
-            populateSaveSlots();
-            alert(`Nueva partida iniciada en la Ranura ${slotId + 1}.`);
-        } else {
-            alert(`Cargando partida desde la Ranura ${slotId + 1}.\nDatos: ${JSON.stringify(slot.data, null, 2)}`);
-        }
+        window.location.href = `game.html?slot=${slotId}`;
     }
     
     startButton.addEventListener('click', (e) => { e.preventDefault(); populateSaveSlots(); showPanel(saveSlotsMenu); });
@@ -210,6 +200,21 @@ document.addEventListener('DOMContentLoaded', () => {
         currentSettings.brightness = parseInt(e.target.value, 10);
         saveSettings(currentSettings);
         applyVisualSettings(currentSettings);
+    });
+
+    // === NUEVO: Lógica para el botón de Borrar Progreso ===
+    deleteProgressButton.addEventListener('click', () => {
+        // Pedir confirmación al usuario
+        const isConfirmed = confirm("¿Estás seguro de que quieres borrar todo tu progreso? Esta acción no se puede deshacer.");
+        
+        if (isConfirmed) {
+            // Borrar los datos de guardado del localStorage
+            localStorage.removeItem(SAVE_KEY);
+            
+            // Notificar al usuario y recargar la página
+            alert("Todo tu progreso ha sido borrado.");
+            window.location.reload();
+        }
     });
 
     // --- AÑADIR SONIDOS A ELEMENTOS INTERACTIVOS ---

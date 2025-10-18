@@ -178,40 +178,39 @@ input[type="range"]::-webkit-slider-thumb:hover { background: #ffffff; }
 .option-btn:hover { background: #555; color: #fff; }
 .option-btn.active { background: #cccccc; color: #111; border-color: #cccccc; }
 
-#back-to-menu-button, #back-to-main-menu-button { display: block; width: 100%; padding: 1rem; margin-top: 2rem; background: transparent; border: 2px solid #ccc; color: #ccc; font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; }
+#back-to-menu-button, #back-to-main-menu-button { display: block; width: 100%; padding: 1rem; background: transparent; border: 2px solid #ccc; color: #ccc; font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; }
+#back-to-menu-button { margin-top: 1rem; } /* Ajuste de espacio */
 #back-to-menu-button:hover, #back-to-main-menu-button:hover { background: #ccc; color: #111; }
 
-/* --- ESTILOS ESPECÍFICOS PARA RANURAS DE GUARDADO --- */
-#slots-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-.save-slot {
-    padding: 1rem 1.5rem;
-    border: 2px solid #555;
-    background-color: rgba(0,0,0,0.2);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: left;
-}
-.save-slot:hover {
-    border-color: #ccc;
-    background-color: rgba(200,200,200,0.1);
-}
-.save-slot .slot-title {
-    font-size: 1.2rem;
+/* === NUEVO: Estilo para el botón de Borrar Progreso === */
+#delete-progress-button {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    margin-top: 2rem;
+    background: transparent;
+    border: 2px solid #e94560; /* Color rojo de advertencia */
+    color: #e94560;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
     font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+#delete-progress-button:hover {
+    background: #e94560;
     color: #fff;
-    margin-bottom: 0.25rem;
 }
-.save-slot .slot-status {
-    font-size: 0.9rem;
-    color: #aaa;
-}
-.save-slot.occupied .slot-status {
-    color: #8fddff; /* Un color para indicar que hay datos */
-}
+
+
+/* --- ESTILOS ESPECÍFICOS PARA RANURAS DE GUARDADO --- */
+#slots-container { display: flex; flex-direction: column; gap: 1rem; }
+.save-slot { padding: 1rem 1.5rem; border: 2px solid #555; background-color: rgba(0,0,0,0.2); cursor: pointer; transition: all 0.2s ease; text-align: left; }
+.save-slot:hover { border-color: #ccc; background-color: rgba(200,200,200,0.1); }
+.save-slot .slot-title { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem; }
+.save-slot .slot-status { font-size: 0.9rem; color: #aaa; }
+.save-slot.occupied .slot-status { color: #8fddff; }
 
 /* --- MEDIA QUERIES --- */
 @media (max-width: 768px) {

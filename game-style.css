@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+    --primary-bg: #1a1a2e;
+    --secondary-bg: #16213e;
+    --tertiary-bg: #0f3460;
+    --accent-color: #e94560;
+    --text-color: #dcdcdc;
+    --bar-energy: #33ff57;
+    --bar-knowledge: #57a0ff;
+    --bar-record: #ffcc00;
+    --bar-edit: #00c4ff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+}
+
+/* --- Paneles Principales --- */
+#stats-panel {
+    background-color: var(--secondary-bg);
+    padding: 1rem;
+    border-bottom: 2px solid var(--tertiary-bg);
+}
+
+#main-panel {
+    flex-grow: 1;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#actions-panel {
+    background-color: var(--secondary-bg);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    border-top: 2px solid var(--tertiary-bg);
+}
+
+/* --- Panel de Estadísticas --- */
+#stats-panel h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+#stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+}
+.stat-item {
+    flex-basis: calc(50% - 0.5rem);
+    min-width: 140px;
+    flex-grow: 1;
+}
+.stat-item.full-width {
+    flex-basis: 100%;
+}
+.stat-label {
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.stat-value {
+    float: right;
+    font-weight: 700;
+    color: #fff;
+    font-size: 0.9rem;
+}
+.stat-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+.bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 5px;
+    transition: width 0.3s ease-in-out;
+}
+#energy-bar { background-color: var(--bar-energy); }
+#knowledge-bar { background-color: var(--bar-knowledge); }
+
+/* --- Panel de Acciones --- */
+.action-btn {
+    flex-grow: 1;
+    padding: 0.8rem 1rem;
+    background-color: var(--tertiary-bg);
+    border: 2px solid var(--accent-color);
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.action-btn:hover, .action-btn:active {
+    background-color: var(--accent-color);
+}
+.action-btn:disabled {
+    background-color: #555;
+    border-color: #777;
+    cursor: not-allowed;
+}
+
+/* --- Estilos Generales para Modales --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.modal-content {
+    background-color: var(--secondary-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid var(--accent-color);
+    max-width: 600px;
+    text-align: center;
+    width: 100%;
+}
+.modal-content h2 { margin-bottom: 1rem; color: #fff; }
+.modal-content p { margin-bottom: 1rem; line-height: 1.6; }
+#start-game-button, #confirm-upload-button {
+    padding: 0.8rem 2rem;
+    background-color: var(--accent-color);
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+/* --- Estilos para el Modal del Ordenador --- */
+.computer-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+.computer-btn { padding: 1.5rem 1rem; background-color: var(--tertiary-bg); border: 2px solid transparent; color: var(--text-color); font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+.computer-btn:hover { border-color: var(--accent-color); color: #fff; }
+.computer-btn:disabled { background-color: #222; color: #666; cursor: not-allowed; border-color: transparent; }
+.modal-back-button { width: 100%; margin-top: 1rem; padding: 0.8rem; background: transparent; border: 2px solid #555; color: #aaa; font-size: 1rem; border-radius: 8px; cursor: pointer; }
+.modal-back-button:hover { background: #555; color: #fff; }
+
+/* --- Estilos para el Modal de Grabación --- */
+#click-target { width: 100%; height: 150px; background-color: var(--tertiary-bg); border: 3px dashed #555; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 700; color: #888; cursor: pointer; user-select: none; margin: 1rem 0; transition: background-color 0.2s; }
+#click-target:active { background-color: #2a4a7a; }
+.recording-progress { height: 20px; }
+#recording-progress-bar { background-color: var(--bar-record); transition: width 0.1s linear; }
+#editing-progress-bar { background-color: var(--bar-edit); transition: width 1s linear; }
+
+/* --- Estilos para Modales de Tienda y Mejoras --- */
+#upgrade-info, .shop-item, .owned-game-item { text-align: left; padding: 1rem; border: 1px solid var(--tertiary-bg); border-radius: 8px; margin-bottom: 1rem; }
+#buy-upgrade-button { margin-top: 1rem; width: 100%; }
+.shop-item { display: flex; justify-content: space-between; align-items: center; }
+.shop-item-info p { margin: 0; font-size: 0.9rem; color: #aaa; }
+.owned-game-item { cursor: pointer; transition: background-color 0.2s ease; }
+.owned-game-item:hover { background-color: var(--tertiary-bg); }
+#video-title-input { width: 100%; padding: 0.8rem; margin-top: 1rem; border-radius: 5px; border: 2px solid #555; background: var(--primary-bg); color: var(--text-color); font-size: 1rem; }
+
+/* --- Sistema de Notificaciones --- */
+#notification-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 10px; }
+.notification { padding: 15px 20px; border-radius: 8px; color: #fff; font-weight: 700; opacity: 0; transform: translateX(100%); animation: slideIn 0.5s forwards, fadeOut 0.5s 4s forwards; }
+.notification.success { background-color: #28a745; }
+.notification.error { background-color: #dc3545; }
+.notification.info { background-color: #17a2b8; }
+@keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(100%); } }
+
+/* --- Adaptación para Móviles --- */
+@media (max-width: 480px) {
+    .stat-item { flex-basis: 100%; }
+    .action-btn { font-size: 0.9rem; }
+    .modal-content { padding: 1.5rem; }
+    .computer-actions-grid { grid-template-columns: 1fr; }
+}
