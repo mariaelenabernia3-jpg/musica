@@ -53,6 +53,9 @@
         <footer id="actions-panel">
             <button id="sleep-button" class="action-btn">Dormir</button>
             <button id="study-button" class="action-btn">Estudiar</button>
+            <button id="work-button" class="action-btn">Trabajar</button>
+            <!-- BOTÓN NUEVO -->
+            <button id="play-games-button" class="action-btn">Jugar Videojuegos</button>
             <button id="computer-button" class="action-btn">Usar Ordenador</button>
         </footer>
     </div>
@@ -86,6 +89,23 @@
             <p>¡Haz clic lo más rápido que puedas para grabar!</p>
             <div id="click-target"><span>CLIC AQUÍ</span></div>
             <div class="stat-bar recording-progress"><div id="recording-progress-bar" class="bar-fill"></div></div>
+        </div>
+    </div>
+
+    <div id="working-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>¡A trabajar!</h2>
+            <p>¡Haz clic lo más rápido que puedas para ganar dinero!</p>
+            <div id="work-click-target"><span>CLIC AQUÍ</span></div>
+            <div class="stat-bar recording-progress"><div id="working-progress-bar" class="bar-fill"></div></div>
+        </div>
+    </div>
+
+    <div id="exam-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Resultados del Examen</h2>
+            <p id="exam-result-text"></p>
+            <button id="close-exam-modal-button" class="action-btn">Continuar</button>
         </div>
     </div>
 
@@ -133,6 +153,38 @@
         </div>
     </div>
     
+    <!-- === MODALES PARA JUGAR VIDEOJUEGOS === -->
+    <div id="play-games-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>¿A qué quieres jugar?</h2>
+            <div id="owned-games-to-play-container"></div>
+            <button id="back-to-room-from-play-select-button" class="modal-back-button">Cancelar</button>
+        </div>
+    </div>
+    
+    <div id="snake-game-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Serpiente Pixelada</h2>
+            <p>Puntuación: <span id="snake-score">0</span></p>
+            <canvas id="snake-canvas" width="400" height="400"></canvas>
+            <p id="snake-game-over" class="hidden">¡FIN DEL JUEGO!</p>
+            <button id="close-snake-game-button" class="modal-back-button">Salir</button>
+        </div>
+    </div>
+
+    <div id="penalty-game-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Tiro de Gloria</h2>
+            <p>¡Elige a dónde chutar el penalti!</p>
+            <div id="penalty-actions">
+                <button class="action-btn" data-shot="left">Izquierda</button>
+                <button class="action-btn" data-shot="center">Centro</button>
+                <button class="action-btn" data-shot="right">Derecha</button>
+            </div>
+            <h3 id="penalty-result"></h3>
+        </div>
+    </div>
+
     <!-- Contenedor para las notificaciones -->
     <div id="notification-container"></div>
 
