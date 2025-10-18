@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelCraft</title>
+    <link rel="stylesheet" href="pixelcraft-style.css">
+</head>
+<body>
+    <div id="game-wrapper">
+        <header id="game-header">
+            <h1>PixelCraft</h1>
+            <div id="time-container">
+                <span id="time-icon">☀️</span>
+                <span>Día <span id="day-counter">1</span> - </span>
+                <span id="time-of-day">Mañana</span>
+            </div>
+        </header>
+
+        <main id="pixelcraft-container">
+            <!-- Columna Izquierda: Acciones y Crafteo -->
+            <div id="left-panel">
+                <div class="panel actions-panel">
+                    <h3>Acciones</h3>
+                    <button id="action-chop-wood" class="action-btn">Talar Madera</button>
+                    <button id="action-mine-stone" class="action-btn" disabled>Minar Piedra</button>
+                    <button id="action-mine-deep" class="action-btn" disabled>Minería Profunda</button>
+                    <button id="action-hunt" class="action-btn" disabled>Cazar Comida</button>
+                </div>
+                <div class="panel">
+                    <h3>Fabricación</h3>
+                    <button id="open-crafting-btn" class="action-btn">Abrir Mesa de Crafteo</button>
+                </div>
+                 <div class="panel">
+                    <h3>Jefe Final</h3>
+                    <button id="summon-boss-btn" class="action-btn" disabled>Invocar al Golem Ancestral</button>
+                </div>
+            </div>
+
+            <!-- Columna Central: Personaje y Log -->
+            <div id="center-panel">
+                <div id="character-stats">
+                    <div class="stat-display">
+                        <label>❤️ Vida:</label>
+                        <div class="stat-bar"><div id="health-bar" class="bar-fill"></div></div>
+                        <span id="health-value">100/100</span>
+                    </div>
+                    <div class="stat-display">
+                        <label>🍖 Hambre:</label>
+                        <div class="stat-bar"><div id="hunger-bar" class="bar-fill"></div></div>
+                        <span id="hunger-value">100/100</span>
+                    </div>
+                </div>
+                <div id="character-view">
+                    <!-- Aquí podría ir una imagen del personaje -->
+                    <p>Tu aventura te espera.</p>
+                </div>
+                <div id="log-panel">
+                    <ul id="log-messages">
+                        <li>Bienvenido a PixelCraft.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Inventario y Equipo -->
+            <div id="right-panel">
+                <div class="panel inventory-panel">
+                    <h3>Materiales</h3>
+                    <ul id="inventory-list">
+                        <!-- Se genera con JS -->
+                    </ul>
+                </div>
+                <div class="panel equipment-panel">
+                    <h3>Equipo</h3>
+                    <div id="equipment-slots">
+                        <p><strong>Arma:</strong> <span id="equip-weapon">Ninguna</span></p>
+                        <p><strong>Casco:</strong> <span id="equip-helmet">Ninguno</span></p>
+                        <p><strong>Pechera:</strong> <span id="equip-chestplate">Ninguna</span></p>
+                        <p><strong>Pantalones:</strong> <span id="equip-leggings">Ningunos</span></p>
+                        <p><strong>Botas:</strong> <span id="equip-boots">Ningunas</span></p>
+                    </div>
+                </div>
+                 <div class="panel">
+                    <button id="save-exit-btn">Guardar y Salir</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- === MODALES DEL MINIJUEGO === -->
+    <div id="crafting-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Mesa de Crafteo</h2>
+            <div id="crafting-grid">
+                <!-- Se genera con JS -->
+            </div>
+            <button id="close-crafting-btn" class="modal-back-button">Cerrar</button>
+        </div>
+    </div>
+    <div id="combat-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 id="combat-title">¡Un enemigo aparece!</h2>
+            <div id="combat-status">
+                <p><strong>Tu vida:</strong> <span id="combat-player-health"></span></p>
+                <p><strong>Vida del Enemigo:</strong> <span id="combat-enemy-health"></span></p>
+            </div>
+            <div id="combat-actions">
+                <button id="combat-attack-btn">Atacar</button>
+                <button id="combat-eat-btn" disabled>Comer (1x 🥩)</button>
+                <button id="combat-flee-btn">Huir</button>
+            </div>
+            <p id="combat-result-text"></p>
+        </div>
+    </div>
+    <div id="game-over-modal" class="modal-overlay hidden">
+         <div class="modal-content">
+            <h2>Has Muerto</h2>
+            <p>Has sido derrotado por las criaturas de la noche. Pierdes la mitad de tus materiales y la sesión de grabación termina.</p>
+            <button id="game-over-btn">Volver al juego principal</button>
+        </div>
+    </div>
+
+
+    <script src="pixelcraft-script.js"></script>
+</body>
+</html>

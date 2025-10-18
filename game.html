@@ -11,7 +11,7 @@
     <div id="game-container">
         <!-- Panel de Estadísticas del Jugador -->
         <aside id="stats-panel">
-            <h3>Mi Estado</h3>
+            <h3 id="channel-name-display">Cargando...</h3>
             <div id="stats-container">
                 <div class="stat-item">
                     <span class="stat-label">⚡ Energía:</span>
@@ -42,10 +42,11 @@
             </div>
         </aside>
 
-        <!-- Panel Principal del Juego -->
+        <!-- Panel Principal del Juego (Ahora es el Panel de Narración) -->
         <main id="main-panel">
             <div id="room-view">
-                <p>Estás en tu habitación. Es hora de empezar tu aventura.</p>
+                <!-- ESTE ES EL PÁRRAFO QUE CAMBIARÁ -->
+                <p id="narration-text">Cargando tu historia...</p>
             </div>
         </main>
 
@@ -54,18 +55,26 @@
             <button id="sleep-button" class="action-btn">Dormir</button>
             <button id="study-button" class="action-btn">Estudiar</button>
             <button id="work-button" class="action-btn">Trabajar</button>
-            <!-- BOTÓN NUEVO -->
             <button id="play-games-button" class="action-btn">Jugar Videojuegos</button>
             <button id="computer-button" class="action-btn">Usar Ordenador</button>
         </footer>
     </div>
 
     <!-- === MODALES === -->
+    <div id="story-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 id="story-title">El Comienzo de un Sueño</h2>
+            <p id="story-text">Desde que eras un niño pequeño, te quedabas horas viendo videos en ViewTube. Te fascinaba cómo una persona podía entretener y conectar con millones...</p>
+            <button id="next-story-btn">Siguiente</button>
+        </div>
+    </div>
+
     <div id="intro-modal" class="modal-overlay hidden">
         <div class="modal-content">
-            <h2>El Comienzo de un Sueño</h2>
-            <p>Desde que era niño, me fascinaba YouTube... Un día, pensé: "Yo también quiero hacer eso". ¡Mi vida de YouTuber empieza ahora!</p>
-            <button id="start-game-button">¡Empezar mi Aventura!</button>
+            <h2>Crea tu Canal</h2>
+            <p>Has decidido que es tu momento. Vas a ser un YouTuber. Pero primero, tu canal necesita un nombre.</p>
+            <input type="text" id="channel-name-input" placeholder="Nombre de tu canal..." maxlength="20">
+            <button id="start-game-button">¡Crear Canal!</button>
         </div>
     </div>
     
@@ -75,11 +84,29 @@
             <div class="computer-actions-grid">
                 <button id="record-video-button" class="computer-btn">Grabar Video</button>
                 <button id="edit-video-button" class="computer-btn">Editar Video</button>
+                <button id="upload-video-button" class="computer-btn">Subir Video</button>
                 <button id="buy-games-button" class="computer-btn">Tienda de Juegos</button>
                 <button id="upgrade-pc-button" class="computer-btn">Mejorar PC</button>
-                <button id="upload-video-button" class="computer-btn">Subir Video</button>
+                <button id="leaderboard-button" class="computer-btn">Tabla de Canales</button>
             </div>
             <button id="back-to-room-button" class="modal-back-button">Volver a la Habitación</button>
+        </div>
+    </div>
+
+    <div id="leaderboard-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Tabla de Clasificación de ViewTube</h2>
+            <table id="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Canal</th>
+                        <th>Suscriptores</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+            </table>
+            <button id="back-to-computer-button-leaderboard" class="modal-back-button">Volver</button>
         </div>
     </div>
 
@@ -153,7 +180,6 @@
         </div>
     </div>
     
-    <!-- === MODALES PARA JUGAR VIDEOJUEGOS === -->
     <div id="play-games-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <h2>¿A qué quieres jugar?</h2>
@@ -167,8 +193,14 @@
             <h2>Serpiente Pixelada</h2>
             <p>Puntuación: <span id="snake-score">0</span></p>
             <canvas id="snake-canvas" width="400" height="400"></canvas>
+            <div id="snake-controls">
+                <button id="snake-up" class="snake-control-btn">▲</button>
+                <button id="snake-left" class="snake-control-btn">◀</button>
+                <button id="snake-down" class="snake-control-btn">▼</button>
+                <button id="snake-right" class="snake-control-btn">▶</button>
+            </div>
             <p id="snake-game-over" class="hidden">¡FIN DEL JUEGO!</p>
-            <button id="close-snake-game-button" class="modal-back-button">Salir</button>
+            <button id="close-snake-game-button" class="modal-back-button">Salir del Minijuego</button>
         </div>
     </div>
 
@@ -185,7 +217,6 @@
         </div>
     </div>
 
-    <!-- Contenedor para las notificaciones -->
     <div id="notification-container"></div>
 
     <script src="game-script.js"></script>
