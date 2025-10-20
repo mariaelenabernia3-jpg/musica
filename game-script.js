@@ -78,7 +78,7 @@ window.onload = () => {
     function triggerExam() { let resultMessage = ''; if (gameState.knowledge >= 100) { const bonus = 20; gameState.money += bonus; resultMessage = `¡EXCELENTE! Has dominado la materia. Recibes un bono de $${bonus}.`; } else if (gameState.knowledge >= 60) { resultMessage = `APROBADO. Has pasado el examen, pero puedes mejorar.`; } else { const fee = 15; const amountPaid = Math.min(fee, gameState.money); gameState.money -= amountPaid; resultMessage = `DESAPROBADO. Necesitas esforzarte más. Pagas una multa de $${amountPaid}.`; } document.getElementById('exam-result-text').textContent = resultMessage; showModal('exam-modal'); }
 
     // --- ACCIONES PRINCIPALES ---
-    function sleep() { if (gameState.energy >= (100 + gameState.modifiers.maxEnergyBonus)) { showNotification("Ya tienes la energía al máximo.", 'info'); return; } narrateAction("Te metes en la cama y el mundo se desvanecce. Mañana será un nuevo día."); startNewDay(); }
+    function sleep() { if (gameState.energy >= (100 + gameState.modifiers.maxEnergyBonus)) { showNotification("Ya tienes la energía al máximo.", 'info'); return; } narrateAction("Te metes en la cama y el mundo se desvanece. Mañana será un nuevo día."); startNewDay(); }
     function executeAction(baseEnergyCost, actionFn) {
         const chair = CHAIR_UPGRADES[gameState.equipment.chair - 1];
         const finalCost = Math.round(baseEnergyCost * gameState.modifiers.energyCostMultiplier * (1 - chair.energyDiscount));
@@ -112,9 +112,21 @@ window.onload = () => {
     });}
     
     // --- LÓGICA DE JUGAR VIDEOJUEGOS ---
+    
+    // --- INICIO DEL CÓDIGO CORREGIDO ---
     function handlePlayGameSelection(gameId) {
+        const game = GAME_SHOP.find(g => g.id === gameId);
+        if (!game) return; // Salida de seguridad
+
+        // Evita que Serpiente Pixelada se juegue por diversión
+        if (gameId === 'serpientePixelada') {
+            showNotification(`"${game.name}" es un juego retro muy difícil. Prefieres guardarlo solo para grabar.`, 'info');
+            return; // Sale de la función sin gastar energía
+        }
+
+        // Para los otros juegos, procede normalmente
         executeAction(5, () => {
-            narrateAction("Decides tomarte un descanso y disfrutar de uno de tus videojuegos favoritos.");
+            narrateAction(`Decides tomarte un descanso y disfrutar de ${game.name}.`);
             
             if (gameId === 'pixelCraft') { 
                 saveGame(); 
@@ -124,11 +136,12 @@ window.onload = () => {
     
             closeModal(); // Cierra el modal de selección antes de abrir el del minijuego
             switch (gameId) {
-                case 'serpientePixelada': startSnakeGame(); break;
                 case 'tiroDeGloria': startPenaltyGame(); break;
+                // El caso de 'serpientePixelada' ya no es necesario aquí
             }
         });
     }
+    // --- FIN DEL CÓDIGO CORREGIDO ---
 
     function openPlayGamesModal() { 
         if (gameState.ownedGames.length === 0) { showNotification('Necesitas comprar un juego primero.', 'info'); return; }
@@ -165,7 +178,16 @@ window.onload = () => {
     // --- LÓGICA DE GRABACIÓN, EDICIÓN Y SUBIDA ---
     function startRecordingSession(gameId) { executeAction(25, () => {
         narrateAction("Enciendes la cámara y el micrófono. ¡La luz roja parpadea!");
-        gameState.video.lastRecordedGameId = gameId; closeModal(); showModal('recording-modal'); let progress = 0; const clickTarget = document.getElementById('click-target'); const recordingProgressBarUI = document.getElementById('recording-progress-bar'); recordingProgressBarUI.style.width = '0%';
+        gameState.video.lastRecordedGameId = gameId; closeModal();
+        
+        // Si es el juego del snake, lo iniciamos para grabar
+        if (gameId === 'serpientePixelada') {
+            startSnakeGame(true); // Pasamos 'true' para indicar que es una grabación
+            return;
+        }
+
+        showModal('recording-modal'); 
+        let progress = 0; const clickTarget = document.getElementById('click-target'); const recordingProgressBarUI = document.getElementById('recording-progress-bar'); recordingProgressBarUI.style.width = '0%';
         const handleRecordClick = () => {
             progress += 5; recordingProgressBarUI.style.width = `${progress}%`;
             if (progress >= 100) {
@@ -213,80 +235,39 @@ window.onload = () => {
     function awardPlayBonus() { showNotification(`¡Te has divertido! Energía +5`, 'success'); gameState.energy = Math.min(100 + gameState.modifiers.maxEnergyBonus, gameState.energy + 5); updateUI(); saveGame(); }
     function startPenaltyGame() { showModal('penalty-game-modal'); const resultUI = document.getElementById('penalty-result'); const actionsContainer = document.getElementById('penalty-actions'); resultUI.textContent = ''; const buttons = actionsContainer.querySelectorAll('button'); buttons.forEach(btn => btn.disabled = false); const handleShot = (e) => { buttons.forEach(btn => btn.disabled = true); const success = Math.random() > 0.4; if (success) { resultUI.textContent = "¡¡¡GOOOOL!!!"; resultUI.style.color = 'var(--bar-energy)'; } else { resultUI.textContent = "¡PARADO POR EL PORTERO!"; resultUI.style.color = 'var(--accent-color)'; } setTimeout(() => { closeModal(); awardPlayBonus(); }, 2000); }; buttons.forEach(btn => { btn.onclick = handleShot; }); }
     
-    function startSnakeGame() {
+    function startSnakeGame(isRecording = false) {
         showModal('snake-game-modal');
-        const canvas = document.getElementById('snake-canvas');
-        const scoreUI = document.getElementById('snake-score');
-        const gameOverUI = document.getElementById('snake-game-over');
-        const ctx = canvas.getContext('2d');
-        const gridSize = 20;
-        // --- INICIO DEL CÓDIGO CORREGIDO ---
-        let snake = [{ x: 7, y: 7 }]; // Posición inicial centrada para un canvas de 300x300 (15x15 grid)
-        // --- FIN DEL CÓDIGO CORREGIDO ---
-        let food = {};
-        let score = 0;
-        let direction = 'right';
-        let isGameOver = false;
+        const canvas = document.getElementById('snake-canvas'); const scoreUI = document.getElementById('snake-score'); const gameOverUI = document.getElementById('snake-game-over'); const ctx = canvas.getContext('2d'); const gridSize = 20;
+        let snake = [{ x: 7, y: 7 }]; let food = {}; let score = 0; let direction = 'right'; let isGameOver = false;
 
         function generateFood() { food = { x: Math.floor(Math.random() * (canvas.width / gridSize)), y: Math.floor(Math.random() * (canvas.height / gridSize)) }; }
-        
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            snake.forEach(segment => { ctx.fillStyle = 'var(--bar-energy)'; ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 1, gridSize - 1); });
-            ctx.fillStyle = 'var(--accent-color)'; ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize);
-        }
+        function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); snake.forEach(segment => { ctx.fillStyle = 'var(--bar-energy)'; ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 1, gridSize - 1); }); ctx.fillStyle = 'var(--accent-color)'; ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize); }
         
         function endGame() {
-            isGameOver = true;
-            gameOverUI.classList.remove('hidden');
-            clearInterval(snakeGameInterval);
-            document.removeEventListener('keydown', changeDirection);
+            isGameOver = true; gameOverUI.classList.remove('hidden'); clearInterval(snakeGameInterval); document.removeEventListener('keydown', changeDirection);
+            if (isRecording) {
+                const footageGained = 10 + (score * 2); // 10 de base + 2 por cada punto
+                gameState.video.rawFootage += footageGained;
+                showNotification(`¡Grabación de Snake finalizada! Metraje +${footageGained}`, 'success');
+                updateUI();
+                saveGame();
+            }
         }
 
         function updateGame() {
             if (isGameOver) return;
             let head = { x: snake[0].x, y: snake[0].y };
             if (direction === 'right') head.x++; else if (direction === 'left') head.x--; else if (direction === 'up') head.y--; else if (direction === 'down') head.y++;
-            
-            if (head.x < 0 || head.x * gridSize >= canvas.width || head.y < 0 || head.y * gridSize >= canvas.height || snake.some(segment => segment.x === head.x && segment.y === head.y)) {
-                endGame();
-                return;
-            }
-
+            if (head.x < 0 || head.x * gridSize >= canvas.width || head.y < 0 || head.y * gridSize >= canvas.height || snake.some(segment => segment.x === head.x && segment.y === head.y)) { endGame(); return; }
             snake.unshift(head);
-            if (head.x === food.x && head.y === food.y) {
-                score++; scoreUI.textContent = score; generateFood();
-            } else {
-                snake.pop();
-            }
+            if (head.x === food.x && head.y === food.y) { score++; scoreUI.textContent = score; generateFood(); } else { snake.pop(); }
             draw();
         }
 
-        const changeDirection = (e) => {
-            const key = e.key;
-            if ((key === 'ArrowUp' || key === 'w') && direction !== 'down') direction = 'up';
-            else if ((key === 'ArrowDown' || key === 's') && direction !== 'up') direction = 'down';
-            else if ((key === 'ArrowLeft' || key === 'a') && direction !== 'right') direction = 'left';
-            else if ((key === 'ArrowRight' || key === 'd') && direction !== 'left') direction = 'right';
-        };
-
-        document.getElementById('snake-up').onclick = () => { if (direction !== 'down') direction = 'up'; };
-        document.getElementById('snake-down').onclick = () => { if (direction !== 'up') direction = 'down'; };
-        document.getElementById('snake-left').onclick = () => { if (direction !== 'right') direction = 'left'; };
-        document.getElementById('snake-right').onclick = () => { if (direction !== 'left') direction = 'right'; };
-
-        gameOverUI.classList.add('hidden');
-        scoreUI.textContent = 0;
-        generateFood();
-        document.addEventListener('keydown', changeDirection);
-        snakeGameInterval = setInterval(updateGame, 150);
-
-        document.getElementById('close-snake-game-button').onclick = () => {
-            if (snakeGameInterval) clearInterval(snakeGameInterval);
-            document.removeEventListener('keydown', changeDirection);
-            closeModal();
-            awardPlayBonus();
-        };
+        const changeDirection = (e) => { const key = e.key; if ((key === 'ArrowUp' || key === 'w') && direction !== 'down') direction = 'up'; else if ((key === 'ArrowDown' || key === 's') && direction !== 'up') direction = 'down'; else if ((key === 'ArrowLeft' || key === 'a') && direction !== 'right') direction = 'left'; else if ((key === 'ArrowRight' || key === 'd') && direction !== 'left') direction = 'right'; };
+        document.getElementById('snake-up').onclick = () => { if (direction !== 'down') direction = 'up'; }; document.getElementById('snake-down').onclick = () => { if (direction !== 'up') direction = 'down'; }; document.getElementById('snake-left').onclick = () => { if (direction !== 'right') direction = 'left'; }; document.getElementById('snake-right').onclick = () => { if (direction !== 'left') direction = 'right'; };
+        gameOverUI.classList.add('hidden'); scoreUI.textContent = 0; generateFood(); draw(); document.addEventListener('keydown', changeDirection); snakeGameInterval = setInterval(updateGame, 150);
+        document.getElementById('close-snake-game-button').onclick = () => { if (snakeGameInterval) clearInterval(snakeGameInterval); document.removeEventListener('keydown', changeDirection); closeModal(); if (!isRecording) awardPlayBonus(); };
     }
 
     // --- INICIALIZACIÓN Y EVENT LISTENERS ---
