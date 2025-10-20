@@ -409,15 +409,25 @@ window.onload = () => {
             return;
         }
 
-        // Cargar datos del juego principal
+        // --- INICIO DEL CÓDIGO CORREGIDO ---
+        // Cargar datos del juego principal de forma segura
         let allSavesText = localStorage.getItem(SAVE_KEY);
-        let allSaves = allSavesText ? JSON.parse(allSavesText) : [];
-        mainGameState = allSaves[currentSlotId]?.data;
+        let allSaves = allSavesText ? JSON.parse(allSavesText) : null;
 
-        if (!mainGameState) {
-            document.body.innerHTML = '<h1>Error: No se pudo cargar la partida.</h1>';
+        // Validar que el archivo de guardado y la ranura específica existan
+        if (!allSaves || !allSaves[currentSlotId]) {
+            document.body.innerHTML = '<h1>Error: No se pudo cargar la partida. Asegúrate de haber iniciado una partida en el juego principal.</h1>';
             return;
         }
+        
+        mainGameState = allSaves[currentSlotId].data;
+
+        // Validar que los datos de la partida no estén vacíos
+        if (!mainGameState) {
+            document.body.innerHTML = '<h1>Error: Los datos de la partida están corruptos o vacíos.</h1>';
+            return;
+        }
+        // --- FIN DEL CÓDIGO CORREGIDO ---
 
         // Inicializar el estado de PixelCraft si no existe
         if (!mainGameState.pixelCraft) {

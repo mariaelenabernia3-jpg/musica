@@ -49,7 +49,6 @@ body {
     text-align: center;
 }
 
-/* --- NUEVO ESTILO PARA EL PANEL DE NARRACIÓN --- */
 #room-view {
     background-color: rgba(15, 52, 96, 0.2);
     border-radius: 10px;
@@ -102,6 +101,9 @@ body {
     font-weight: 700;
     color: #fff;
     font-size: 0.9rem;
+}
+#trend-display {
+    color: var(--bar-record);
 }
 .stat-bar {
     width: 100%;
@@ -170,6 +172,9 @@ body {
     max-width: 600px;
     text-align: center;
     width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
 }
 .modal-content h2 { margin-bottom: 1rem; color: #fff; }
 .modal-content p { 
@@ -177,7 +182,7 @@ body {
     line-height: 1.7; 
     font-size: 1.1rem;
 }
-#start-game-button, #confirm-upload-button, #next-story-btn {
+#start-game-button, #confirm-upload-button, #next-story-btn, .action-btn {
     padding: 0.8rem 2rem;
     background-color: var(--accent-color);
     border: none;
@@ -189,6 +194,7 @@ body {
     margin-top: 1rem;
     width: 100%;
 }
+.action-btn { font-size: 1rem; } /* Override for general action buttons */
 
 #channel-name-input {
     width: 100%;
@@ -211,30 +217,11 @@ body {
 .modal-back-button:hover { background: #555; color: #fff; }
 
 /* --- Estilos para Tabla de Clasificación --- */
-#leaderboard-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1.5rem;
-}
-#leaderboard-table th, #leaderboard-table td {
-    padding: 0.8rem;
-    text-align: left;
-    border-bottom: 1px solid var(--tertiary-bg);
-}
-#leaderboard-table th {
-    font-weight: 700;
-    color: var(--accent-color);
-}
-.player-row {
-    background-color: #0f3460a1;
-    font-weight: bold;
-    color: #fff;
-}
-#leaderboard-table td:first-child {
-    text-align: center;
-    font-weight: bold;
-}
-
+#leaderboard-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+#leaderboard-table th, #leaderboard-table td { padding: 0.8rem; text-align: left; border-bottom: 1px solid var(--tertiary-bg); }
+#leaderboard-table th { font-weight: 700; color: var(--accent-color); }
+.player-row { background-color: #0f3460a1; font-weight: bold; color: #fff; }
+#leaderboard-table td:first-child { text-align: center; font-weight: bold; }
 
 /* --- Estilos para el Modal de Grabación --- */
 #click-target, #work-click-target { width: 100%; height: 150px; background-color: var(--tertiary-bg); border: 3px dashed #555; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 700; color: #888; cursor: pointer; user-select: none; margin: 1rem 0; transition: background-color 0.2s; }
@@ -245,37 +232,33 @@ body {
 #editing-progress-bar { background-color: var(--bar-edit); transition: width 1s linear; }
 
 /* --- Estilos para Modales de Tienda y Mejoras --- */
-#upgrade-info, .shop-item, .owned-game-item { text-align: left; padding: 1rem; border: 1px solid var(--tertiary-bg); border-radius: 8px; margin-bottom: 1rem; }
-#buy-upgrade-button { margin-top: 1rem; width: 100%; }
+#upgrade-info, .shop-item, .owned-game-item, .equipment-item { text-align: left; padding: 1rem; border: 1px solid var(--tertiary-bg); border-radius: 8px; margin-bottom: 1rem; }
+#buy-upgrade-button, .buy-equipment-btn { margin-top: 1rem; width: 100%; }
 .shop-item { display: flex; justify-content: space-between; align-items: center; }
-.shop-item-info p { margin: 0; font-size: 0.9rem; color: #aaa; }
+.shop-item-info p, .equipment-item p { margin: 0; font-size: 0.9rem; color: #aaa; }
+.equipment-item p.benefits { color: var(--bar-energy); margin-top: 0.5rem; }
+#equipment-items-container { overflow-y: auto; }
 .owned-game-item { cursor: pointer; transition: background-color 0.2s ease; }
 .owned-game-item:hover { background-color: var(--tertiary-bg); }
 #video-title-input { width: 100%; padding: 0.8rem; margin-top: 1rem; border-radius: 5px; border: 2px solid #555; background: var(--primary-bg); color: var(--text-color); font-size: 1rem; }
 
+/* --- Estilos para el Modal de Comentarios --- */
+#comments-container { margin: 1rem 0; max-height: 300px; overflow-y: auto; text-align: left; display: flex; flex-direction: column; gap: 0.75rem; }
+.comment-item { background-color: var(--tertiary-bg); padding: 0.8rem 1rem; border-radius: 8px; border-left: 4px solid var(--accent-color); }
+.comment-user { font-weight: bold; color: #fff; margin-bottom: 4px; font-size: 0.9rem; }
+.comment-text { font-size: 1rem; line-height: 1.5; }
+
 /* --- Estilos para Minijuegos --- */
-#snake-canvas {
-    background-color: #0c1e3e;
-    border: 2px solid var(--accent-color);
-    max-width: 100%;
+#snake-canvas { background-color: #0c1e3e; border: 2px solid var(--accent-color); max-width: 100%; }
+#snake-game-over { color: var(--accent-color); font-weight: bold; font-size: 1.5rem; margin-top: 1rem; }
+#penalty-actions { display: flex; gap: 1rem; justify-content: center; margin: 1.5rem 0; }
+#penalty-result { margin-top: 1rem; font-size: 2rem; font-weight: bold; }
+
+/* --- INICIO DEL CÓDIGO CORREGIDO --- */
+#snake-score-p {
+    margin-bottom: 0.5rem; /* Reduce el espacio debajo de la puntuación */
 }
-#snake-game-over {
-    color: var(--accent-color);
-    font-weight: bold;
-    font-size: 1.5rem;
-    margin-top: 1rem;
-}
-#penalty-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin: 1.5rem 0;
-}
-#penalty-result {
-    margin-top: 1rem;
-    font-size: 2rem;
-    font-weight: bold;
-}
+/* --- FIN DEL CÓDIGO CORREGIDO --- */
 
 #snake-controls {
     display: grid;
@@ -294,7 +277,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
     padding: 0.5rem;
-    user-select: none;
+    user-select: none; /* Evita seleccionar el texto del botón al tocar rápido */
 }
 .snake-control-btn:active {
     background-color: var(--accent-color);
@@ -303,6 +286,7 @@ body {
 #snake-left { grid-column: 1 / 2; grid-row: 2 / 3; }
 #snake-down { grid-column: 2 / 3; grid-row: 2 / 3; }
 #snake-right { grid-column: 3 / 4; grid-row: 2 / 3; }
+
 
 /* --- Sistema de Notificaciones --- */
 #notification-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 10px; }
@@ -315,9 +299,7 @@ body {
 
 /* --- Adaptación para Móviles --- */
 @media (max-width: 768px) {
-    .computer-actions-grid {
-        grid-template-columns: 1fr 1fr;
-    }
+    .computer-actions-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 480px) {
     #actions-panel { flex-wrap: wrap; }

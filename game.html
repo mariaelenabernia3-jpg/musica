@@ -35,6 +35,10 @@
                     <span class="stat-label">🎬 Metraje Grabado:</span>
                     <span id="footage-value" class="stat-value"></span>
                 </div>
+                 <div class="stat-item full-width">
+                    <span class="stat-label">🔥 Tendencia Hoy:</span>
+                    <span id="trend-display" class="stat-value">Ninguna</span>
+                </div>
                 <div class="stat-item full-width">
                     <span class="stat-label">📅 Día:</span>
                     <span id="day-value" class="stat-value"></span>
@@ -45,7 +49,6 @@
         <!-- Panel Principal del Juego (Ahora es el Panel de Narración) -->
         <main id="main-panel">
             <div id="room-view">
-                <!-- ESTE ES EL PÁRRAFO QUE CAMBIARÁ -->
                 <p id="narration-text">Cargando tu historia...</p>
             </div>
         </main>
@@ -64,7 +67,7 @@
     <div id="story-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <h2 id="story-title">El Comienzo de un Sueño</h2>
-            <p id="story-text">Desde que eras un niño pequeño, te quedabas horas viendo videos en ViewTube. Te fascinaba cómo una persona podía entretener y conectar con millones...</p>
+            <p id="story-text">Desde que eras un niño pequeño, te quedabas horas viendo videos en ViewTube...</p>
             <button id="next-story-btn">Siguiente</button>
         </div>
     </div>
@@ -87,6 +90,7 @@
                 <button id="upload-video-button" class="computer-btn">Subir Video</button>
                 <button id="buy-games-button" class="computer-btn">Tienda de Juegos</button>
                 <button id="upgrade-pc-button" class="computer-btn">Mejorar PC</button>
+                <button id="buy-equipment-button" class="computer-btn">Comprar Equipo</button>
                 <button id="leaderboard-button" class="computer-btn">Tabla de Canales</button>
             </div>
             <button id="back-to-room-button" class="modal-back-button">Volver a la Habitación</button>
@@ -97,13 +101,7 @@
         <div class="modal-content">
             <h2>Tabla de Clasificación de ViewTube</h2>
             <table id="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Canal</th>
-                        <th>Suscriptores</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>#</th><th>Canal</th><th>Suscriptores</th></tr></thead>
                 <tbody id="leaderboard-body"></tbody>
             </table>
             <button id="back-to-computer-button-leaderboard" class="modal-back-button">Volver</button>
@@ -135,6 +133,14 @@
             <button id="close-exam-modal-button" class="action-btn">Continuar</button>
         </div>
     </div>
+    
+    <div id="event-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 id="event-title"></h2>
+            <p id="event-text"></p>
+            <button id="close-event-modal-button" class="action-btn">Entendido</button>
+        </div>
+    </div>
 
     <div id="editing-modal" class="modal-overlay hidden">
         <div class="modal-content">
@@ -151,6 +157,16 @@
             <div id="upgrade-info"></div>
             <button id="buy-upgrade-button" class="action-btn"></button>
             <button id="back-to-computer-button-upgrade" class="modal-back-button">Volver</button>
+        </div>
+    </div>
+    
+    <div id="equipment-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Comprar Equipo Nuevo</h2>
+            <div id="equipment-items-container">
+                <!-- Se genera con JS -->
+            </div>
+            <button id="back-to-computer-button-equipment" class="modal-back-button">Volver</button>
         </div>
     </div>
     
@@ -180,6 +196,14 @@
         </div>
     </div>
     
+     <div id="comments-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>¡Video Subido! Reacciones:</h2>
+            <div id="comments-container"></div>
+            <button id="close-comments-modal-button" class="action-btn">Genial</button>
+        </div>
+    </div>
+    
     <div id="play-games-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <h2>¿A qué quieres jugar?</h2>
@@ -191,14 +215,18 @@
     <div id="snake-game-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <h2>Serpiente Pixelada</h2>
-            <p>Puntuación: <span id="snake-score">0</span></p>
-            <canvas id="snake-canvas" width="400" height="400"></canvas>
+            <p id="snake-score-p">Puntuación: <span id="snake-score">0</span></p>
+            <!-- INICIO DEL CÓDIGO CORREGIDO -->
+            <canvas id="snake-canvas" width="300" height="300"></canvas>
+            <!-- FIN DEL CÓDIGO CORREGIDO -->
+            
             <div id="snake-controls">
                 <button id="snake-up" class="snake-control-btn">▲</button>
                 <button id="snake-left" class="snake-control-btn">◀</button>
                 <button id="snake-down" class="snake-control-btn">▼</button>
                 <button id="snake-right" class="snake-control-btn">▶</button>
             </div>
+
             <p id="snake-game-over" class="hidden">¡FIN DEL JUEGO!</p>
             <button id="close-snake-game-button" class="modal-back-button">Salir del Minijuego</button>
         </div>
